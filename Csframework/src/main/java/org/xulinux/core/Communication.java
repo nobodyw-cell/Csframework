@@ -1,5 +1,7 @@
 package org.xulinux.core;
 
+import org.xulinux.util.Util;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -18,7 +20,7 @@ public abstract class Communication implements Runnable{
     private volatile boolean goon;
 
     public abstract void dealAbnormalDrop();
-    public abstract void dealMessage(String message);
+    public abstract void dealMessage(NetMessage message);
 
     public Communication(Socket socket) {
         try {
@@ -31,9 +33,9 @@ public abstract class Communication implements Runnable{
         }
     }
 
-    public void send(String message) {
+    public void send(NetMessage message) {
         try {
-            this.dos.writeUTF(message);
+            this.dos.writeUTF(Util.gson.toJson(message));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -44,7 +46,7 @@ public abstract class Communication implements Runnable{
         new Thread(this).start();
     }
 
-    public void terminal() {
+    public void close() {
         if (this.goon == false) {
             return;
         }
@@ -87,7 +89,7 @@ public abstract class Communication implements Runnable{
         while (this.goon = true) {
             try {
                 String message = this.dis.readUTF();
-                dealMessage(message);
+                dealMessage(Util.gson.fromJson(message,NetMessage.class));
             } catch (IOException e) {
                 if (this.goon == true) {
                     dealAbnormalDrop();

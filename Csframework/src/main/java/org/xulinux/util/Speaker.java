@@ -11,4 +11,5 @@ import java.util.List;
 public interface Speaker {
     void speak(String message);
     void addListenner(Listenner listenner);
+    void removeListenner(Listenner listenner);
 }

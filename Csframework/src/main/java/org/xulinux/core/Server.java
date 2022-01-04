@@ -17,7 +17,8 @@ import java.util.List;
  * @Date 2022/1/2 下午5:47
  */
 public class Server implements Runnable, Speaker {
-    public int port;
+    private int port;
+    private int maxClientCount;
     private ServerSocket severSocket;
     private volatile boolean goon;
     private ClientPool clientPool;
@@ -31,6 +32,7 @@ public class Server implements Runnable, Speaker {
     public void ininServer(String configPath) {
         PropertiesPaser paser = new PropertiesPaser(configPath);
         this.port = Integer.valueOf(paser.get("port"));
+        this.maxClientCount = Integer.valueOf(paser.get("maxClientCount"));
     }
 
     public void startUp() {
@@ -59,8 +61,16 @@ public class Server implements Runnable, Speaker {
         while(this.goon == true) {
             try {
                 Socket socket = this.severSocket.accept();
-                ServerConversation serverConversation = new ServerConversation(socket);
-                this.clientPool.addClient(serverConversation);
+                ServerConversation serverConversation = new ServerConversation(socket,this);
+                if (this.clientPool.size() > this.maxClientCount) {
+                    serverConversation.overLoad();
+                    speak("服务器已经达到最大负载(" + this.maxClientCount +  ")并拒绝了一名客户端的连接请求");
+                } else {
+                    //告知对方对方的id并维护这个会话
+                    int id = this.clientPool.addClient(serverConversation);
+                    serverConversation.online();
+                }
+
                 speak("客户端" + socket.getInetAddress() + "连接至服务器");
             } catch (IOException e) {
                 if (this.goon == true) {
@@ -76,21 +86,29 @@ public class Server implements Runnable, Speaker {
             l.messageFromSpeaker(message);
         }
     }
+    
+    /**
+     * 转发消息给指定的一个客户端.
+     * 得到指定的客户端
+     * 将消息转发
+     *
+     * @author wfh 
+     * @date 下午9:53 2022/1/4
+     * @param netMessage 含有消息体 信源信标 命令
+     **/
+    public void toOne(NetMessage netMessage) {
+       ServerConversation conversation = this.clientPool.getClient(netMessage.getTarget());
 
-    private void toOne(NetMessage netMessage) {
-
-    }
-
-    public void send(NetMessage netMessage) {
-        switch (netMessage.getCommand()) {
-            case TO_ONE:port
-                toOne(netMessage);
-                break;
-        }
+       conversation.send(netMessage);
     }
 
     @Override
     public void addListenner(Listenner listenner) {
         this.listenners.add(listenner);
+    }
+
+    @Override
+    public void removeListenner(Listenner listenner) {
+        this.listenners.remove(listenner);
     }
 }

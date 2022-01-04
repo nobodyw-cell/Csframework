@@ -8,39 +8,43 @@ package org.xulinux.core;
  */
 public class NetMessage {
     private ENetCommand command;
-    private String sourth;
-    private String target;
+    private int sourth;
+    private int target;
     private String message;
 
     public ENetCommand getCommand() {
         return command;
     }
 
-    public void setCommand(ENetCommand command) {
+    public NetMessage setCommand(ENetCommand command) {
         this.command = command;
+        return this;
     }
 
-    public String getSourth() {
+    public int getSourth() {
         return sourth;
     }
 
-    public void setSourth(String sourth) {
+    public NetMessage setSourth(int sourth) {
         this.sourth = sourth;
+        return this;
     }
 
-    public String getTarget() {
+    public int getTarget() {
         return target;
     }
 
-    public void setTarget(String target) {
+    public NetMessage setTarget(int target) {
         this.target = target;
+        return this;
     }
 
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+    public NetMessage setMessage(String message) {
         this.message = message;
+        return this;
     }
 }

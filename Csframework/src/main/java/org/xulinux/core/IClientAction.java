@@ -8,4 +8,5 @@ package org.xulinux.core;
  */
 public abstract class IClientAction {
     abstract void afterConnect();
+    abstract void dealPrivateMassage(String Message,int sourth);
 }
