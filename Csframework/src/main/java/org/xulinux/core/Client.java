@@ -52,12 +52,12 @@ public class Client {
      * @param message 发送的消息内容
      * @param target 指定客户端的id
      **/
-    public void toOne(String message,int target) {
+    public void toOne(String message,String target) {
         this.conversation.send(
                 new NetMessage()
                         .setCommand(ENetCommand.TO_ONE)
                         .setMessage(message)
-                        .setTarget(target)
+                        .setTarget(String.valueOf(target))
                         .setSourth(this.id)
         );
     }
@@ -77,8 +77,14 @@ public class Client {
         }
     }
 
-    public void toOther(String message,String target) {
-
+    public void toOther(String message,String targets) {
+        this.conversation.toOther(
+                new NetMessage()
+                        .setCommand(ENetCommand.TO_OTHER)
+                        .setTarget(targets)
+                        .setSourth(this.id)
+                        .setMessage(message)
+        );
     }
 
     public IClientAction getClientAction() {

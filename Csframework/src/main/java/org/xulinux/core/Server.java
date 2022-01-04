@@ -40,6 +40,34 @@ public class Server implements Runnable, Speaker {
         this.maxClientCount = Integer.valueOf(paser.get("maxClientCount"));
     }
 
+    public void toOther(NetMessage netMessage) {
+        List<ServerConversation> li = getClientList(netMessage.getTarget());
+
+        for (ServerConversation conversation : li) {
+            conversation.send(netMessage);
+        }
+    }
+
+    /**
+     * 提取target指定的ServerConversation.
+     * 先得到id数组,由id数组找到集合
+     *
+     * @author wfh
+     * @date 下午11:39 2022/1/4
+     * @param targets 由空格隔开的一系列id
+     * @return java.util.List<org.xulinux.core.ServerConversation> 返回由targets指定的会话集合
+     **/
+    private List<ServerConversation> getClientList(String targets) {
+        String[] ids = targets.split(" ");
+        List<ServerConversation> ls = new ArrayList<>();
+
+        for (String id : ids) {
+            ls.add(this.clientPool.getClient(Integer.valueOf(id)));
+        }
+
+        return ls;
+    }
+
     public void startUp() {
         if (this.goon == true) {
             speak("服务器已启动无需再次启动!");
@@ -102,7 +130,7 @@ public class Server implements Runnable, Speaker {
      * @param netMessage 含有消息体 信源信标 命令
      **/
     public void toOne(NetMessage netMessage) {
-       ServerConversation conversation = this.clientPool.getClient(netMessage.getTarget());
+       ServerConversation conversation = this.clientPool.getClient(Integer.valueOf(netMessage.getTarget()));
 
        conversation.send(netMessage);
     }

@@ -9,7 +9,7 @@ package org.xulinux.core;
 public class NetMessage {
     private ENetCommand command;
     private int sourth;
-    private int target;
+    private String target;
     private String message;
 
     public ENetCommand getCommand() {
@@ -30,11 +30,11 @@ public class NetMessage {
         return this;
     }
 
-    public int getTarget() {
+    public String getTarget() {
         return target;
     }
 
-    public NetMessage setTarget(int target) {
+    public NetMessage setTarget(String target) {
         this.target = target;
         return this;
     }

@@ -40,6 +40,8 @@ public class ServerConversation extends Communication{
                 break;
             case OFFLINE:
                 this.server.offline(this);
+            case TO_OTHER:
+                this.server.toOther(netMessage);
         }
     }
 

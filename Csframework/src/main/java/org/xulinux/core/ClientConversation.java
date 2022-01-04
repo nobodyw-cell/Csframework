@@ -40,6 +40,21 @@ public class ClientConversation extends Communication{
                 this.client.getClientAction()
                         .dealPrivateMassage(netMessage.getMessage(), netMessage.getSourth());
                 break;
+            case TO_OTHER:
+                this.client.getClientAction()
+                        .dealSomePeopleMessage(netMessage.getMessage(),netMessage.getTarget(), netMessage.getSourth());
+                break;
         }
+    }
+
+    /**
+     * 发送消息给指定的一群人
+     *
+     * @author wfh
+     * @date 下午11:30 2022/1/4
+     * @param netMessage 含有消息体 信源 信标 命令
+     **/
+    public void toOther(NetMessage netMessage) {
+        send(netMessage);
     }
 }
