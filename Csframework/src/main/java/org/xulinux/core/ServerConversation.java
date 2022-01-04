@@ -12,17 +12,23 @@ import java.net.Socket;
  */
 public class ServerConversation extends Communication{
     private int id;
+    private String ip;
     private Server server;
 
     public ServerConversation(Socket socket,Server server) {
         super(socket);
+        this.ip = socket.getInetAddress().getHostAddress();
         this.id = this.hashCode();
         this.server = server;
     }
 
+    public String getIp() {
+        return ip;
+    }
+
     @Override
     public void dealAbnormalDrop() {
-
+        this.server.speak("客户端" + this.ip + "异常掉线");
     }
 
     @Override
@@ -32,6 +38,8 @@ public class ServerConversation extends Communication{
             case TO_ONE :
                 this.server.toOne(netMessage);
                 break;
+            case OFFLINE:
+                this.server.offline(this);
         }
     }
 
@@ -61,7 +69,6 @@ public class ServerConversation extends Communication{
         send(
                 new NetMessage().setCommand(ENetCommand.OVER_LOAD)
         );
-
         close();
     }
 

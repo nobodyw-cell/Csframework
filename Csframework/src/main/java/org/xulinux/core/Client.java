@@ -62,6 +62,21 @@ public class Client {
         );
     }
 
+    /**
+     * 客户端下线操作.
+     * 这个操作中,下线的确认,下线准备,下线善后由客户端定义
+     *
+     * @author wfh
+     * @date 下午11:16 2022/1/4
+     **/
+    public void offline() {
+        if (this.clientAction.besureOffline()) {
+            this.clientAction.besureOffline();
+            this.conversation.send(new NetMessage().setCommand(ENetCommand.OFFLINE));
+            this.clientAction.afterOffline();
+        }
+    }
+
     public void toOther(String message,String target) {
 
     }

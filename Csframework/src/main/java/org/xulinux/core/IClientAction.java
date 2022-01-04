@@ -9,4 +9,7 @@ package org.xulinux.core;
 public abstract class IClientAction {
     abstract void afterConnect();
     abstract void dealPrivateMassage(String Message,int sourth);
+    abstract boolean besureOffline();
+    abstract void beforeOffline();
+    abstract void afterOffline();
 }

@@ -29,6 +29,11 @@ public class Server implements Runnable, Speaker {
         this.listenners = new ArrayList<>();
     }
 
+    public void offline(ServerConversation conversation) {
+        speak("客户端" + conversation.getIp() + "下线");
+        this.clientPool.removeClient(conversation.hashCode());
+    }
+
     public void ininServer(String configPath) {
         PropertiesPaser paser = new PropertiesPaser(configPath);
         this.port = Integer.valueOf(paser.get("port"));
