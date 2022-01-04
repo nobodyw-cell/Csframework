@@ -83,7 +83,7 @@ public class Server implements Runnable, Speaker {
 
     public void send(NetMessage netMessage) {
         switch (netMessage.getCommand()) {
-            case TO_ONE:
+            case TO_ONE:port
                 toOne(netMessage);
                 break;
         }
