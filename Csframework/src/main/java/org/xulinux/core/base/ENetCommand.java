@@ -1,4 +1,4 @@
-package org.xulinux.core;
+package org.xulinux.core.base;
 
 public enum ENetCommand {
     TO_ONE,

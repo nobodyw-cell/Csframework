@@ -1,4 +1,7 @@
-package org.xulinux.core;
+package org.xulinux.core.client;
+
+import org.xulinux.core.base.Communication;
+import org.xulinux.core.base.NetMessage;
 
 import java.net.Socket;
 
@@ -8,7 +11,7 @@ import java.net.Socket;
  * @Author wfh
  * @Date 2022/1/2 下午4:17
  */
-public class ClientConversation extends Communication{
+public class ClientConversation extends Communication {
     private Client client;
 
     public ClientConversation(Socket socket,Client client) {

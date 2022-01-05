@@ -1,5 +1,8 @@
 package org.xulinux.util;
 
+import org.xulinux.action.annotation.Action;
+import org.xulinux.action.annotation.ActionBean;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +15,7 @@ import java.util.Set;
  * @Author wfh
  * @Date 2022/1/2 下午4:38
  */
+@ActionBean
 public class PropertiesPaser {
     private Properties properties;
 
@@ -30,7 +34,7 @@ public class PropertiesPaser {
     public Set<Object> getKeySet() {
         return this.properties.keySet();
     }
-
+    @Action
     public String get(String key) {
         return this.properties.getProperty(key);
     }

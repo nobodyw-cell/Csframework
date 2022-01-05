@@ -3,6 +3,7 @@ package org.xulinux.util;
 import com.sun.source.doctree.SeeTree;
 import org.xulinux.util.PropertiesPaser;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -31,4 +32,18 @@ public class Test {
             map.remove(s);
         }
     }
+
+    @org.junit.Test
+    public void testForPackageScanner() {
+       PackageScanner ps = new PackageScanner() {
+           @Override
+           public void dealAction(Method method) {
+               System.out.println(method.getName());
+           }
+       };
+
+       ps.scanPackage("/home/wfh/IdeaProjects/Csframework/Csframework/target/classes/org/xulinux/util");
+    }
+
+
 }

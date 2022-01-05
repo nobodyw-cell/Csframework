@@ -1,4 +1,4 @@
-package org.xulinux.core;
+package org.xulinux.core.base;
 
 /**
  * //TODO add class commment here

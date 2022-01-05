@@ -1,5 +1,6 @@
-package org.xulinux.core;
+package org.xulinux.core.server;
 
+import org.xulinux.core.base.NetMessage;
 import org.xulinux.util.Listenner;
 import org.xulinux.util.PropertiesPaser;
 import org.xulinux.util.Speaker;
@@ -91,7 +92,7 @@ public class Server implements Runnable, Speaker {
      * @author wfh
      * @date 下午11:39 2022/1/4
      * @param targets 由空格隔开的一系列id
-     * @return java.util.List<org.xulinux.core.ServerConversation> 返回由targets指定的会话集合
+     * @return java.util.List<org.xulinux.core.server.ServerConversation> 返回由targets指定的会话集合
      **/
     private List<ServerConversation> getClientList(String targets) {
         String[] ids = targets.split(" ");

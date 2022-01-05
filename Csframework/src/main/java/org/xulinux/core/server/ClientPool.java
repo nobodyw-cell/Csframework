@@ -1,4 +1,4 @@
-package org.xulinux.core;
+package org.xulinux.core.server;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,7 +13,7 @@ import java.util.Set;
  * @Date 2022/1/2 下午7:02
  */
 public class ClientPool {
-    private Map<Integer,ServerConversation> pool;
+    private Map<Integer, ServerConversation> pool;
 
     public ClientPool() {
         this.pool = new HashMap<>();
@@ -25,7 +25,7 @@ public class ClientPool {
      * @author wfh
      * @date 下午8:46 2022/1/4
      * @param id 通过此参数指出想要得到的会话
-     * @return org.xulinux.core.ServerConversation 得到的会话
+     * @return org.xulinux.core.server.ServerConversation 得到的会话
      **/
     public ServerConversation getClient(Integer id) {
         return this.pool.get(id);

@@ -1,6 +1,9 @@
-package org.xulinux.core;
+package org.xulinux.core.server;
 
-import org.xulinux.util.Util;
+import org.xulinux.core.base.Communication;
+import org.xulinux.core.base.ENetCommand;
+import org.xulinux.core.base.NetMessage;
+import org.xulinux.core.server.Server;
 
 import java.net.Socket;
 
@@ -10,7 +13,7 @@ import java.net.Socket;
  * @Author wfh
  * @Date 2022/1/2 下午4:16
  */
-public class ServerConversation extends Communication{
+public class ServerConversation extends Communication {
     private int id;
     private String ip;
     private Server server;

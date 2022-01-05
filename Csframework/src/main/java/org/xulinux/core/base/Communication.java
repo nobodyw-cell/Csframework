@@ -1,4 +1,4 @@
-package org.xulinux.core;
+package org.xulinux.core.base;
 
 import org.xulinux.util.Util;
 

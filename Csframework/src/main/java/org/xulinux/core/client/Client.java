@@ -1,7 +1,8 @@
-package org.xulinux.core;
+package org.xulinux.core.client;
 
+import org.xulinux.core.base.ENetCommand;
+import org.xulinux.core.base.NetMessage;
 import org.xulinux.util.PropertiesPaser;
-import org.xulinux.util.Util;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -71,7 +72,7 @@ public class Client {
      **/
     public void offline() {
         if (this.clientAction.besureOffline()) {
-            this.clientAction.besureOffline();
+            this.clientAction.beforeOffline();
             this.conversation.send(new NetMessage().setCommand(ENetCommand.OFFLINE));
             this.clientAction.afterOffline();
         }
