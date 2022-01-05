@@ -18,7 +18,7 @@ public class ClientConversation extends Communication{
 
     @Override
     public void dealAbnormalDrop() {
-
+        this.client.getClientAction().dealAbnormalDrop();
     }
 
     /**

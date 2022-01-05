@@ -34,6 +34,42 @@ public class Server implements Runnable, Speaker {
         this.clientPool.removeClient(conversation.hashCode());
     }
 
+
+    /**
+     * 关闭服务器.
+     * 如果尚存在在线客户端,就返回
+     *
+     * @author wfh
+     * @date 下午5:06 2022/1/5
+     **/
+    public void shutdown() {
+        if (this.clientPool.size() > 0) {
+            speak("尚存在在线客户端" + this.clientPool.size() + "位,不能关机");
+            return;
+        }
+
+        terminate();
+    }
+
+    public void terminate() {
+        if (this.goon == false) {
+            speak("服务器已宕机,无需再次宕机");
+            return;
+        }
+
+        this.clientPool.removeAll();
+
+        this.goon = false;
+        if (this.severSocket != null && !this.severSocket.isClosed()) {
+            try {
+                this.severSocket.close();
+            } catch (IOException e) {
+                this.severSocket = null;
+            }
+        }
+    }
+
+
     public void ininServer(String configPath) {
         PropertiesPaser paser = new PropertiesPaser(configPath);
         this.port = Integer.valueOf(paser.get("port"));

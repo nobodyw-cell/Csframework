@@ -13,4 +13,6 @@ public abstract class IClientAction {
     abstract boolean besureOffline();
     abstract void beforeOffline();
     abstract void afterOffline();
+
+    abstract void dealAbnormalDrop();
 }

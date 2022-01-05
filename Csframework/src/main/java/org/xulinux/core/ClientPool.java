@@ -1,7 +1,9 @@
 package org.xulinux.core;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 管理当前Server中的所有会话(ServerConversation).
@@ -42,6 +44,27 @@ public class ClientPool {
         this.pool.put(serverConversation.hashCode(),serverConversation);
         return serverConversation.hashCode();
     }
+
+
+    /**
+     * 移除并关闭所有客户端的连接.
+     * 如果没有客户端,则直接返回
+     *
+     * @author wfh
+     * @date 下午5:20 2022/1/5
+     **/
+    public void removeAll() {
+        if (this.pool.size() <= 0) {
+            return;
+        }
+
+        Set<Integer> set = new HashSet<>(this.pool.keySet()); //java自身设计问题,内部用的东西不要暴露给外边
+
+        for (Integer id : set) {
+            removeClient(id);
+        }
+    }
+    //很疑惑
 
 
     /**
