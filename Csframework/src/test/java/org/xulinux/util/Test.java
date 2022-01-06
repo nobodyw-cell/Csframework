@@ -57,7 +57,7 @@ public class Test {
     public void testForPackageScanner() {
         PackageScanner ps = new PackageScanner() {
             @Override
-            void dealClass(Class<?> klass) {
+            public void dealClass(Class<?> klass) {
                 System.out.println(klass.getName());
             }
         };

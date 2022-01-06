@@ -1,13 +1,8 @@
 package org.xulinux.util;
 
-import org.junit.Test;
-import org.xulinux.action.annotation.Action;
-import org.xulinux.action.annotation.ActionBean;
+
 
 import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 import java.net.URL;
 
@@ -22,7 +17,7 @@ public abstract class PackageScanner {
     public PackageScanner() {
     }
 
-    abstract void dealClass(Class<?> klass);
+    public abstract void dealClass(Class<?> klass);
 
     /**
      * 扫描包
