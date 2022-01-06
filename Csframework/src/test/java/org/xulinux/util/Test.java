@@ -4,6 +4,7 @@ import com.sun.source.doctree.SeeTree;
 import org.xulinux.util.PropertiesPaser;
 
 import java.lang.reflect.Method;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -34,16 +35,36 @@ public class Test {
     }
 
     @org.junit.Test
-    public void testForPackageScanner() {
-       PackageScanner ps = new PackageScanner() {
-           @Override
-           public void dealAction(Method method) {
-               System.out.println(method.getName());
-           }
-       };
-
-       ps.scanPackage("/home/wfh/IdeaProjects/Csframework/Csframework/target/classes/org/xulinux/util");
+    public void test2() {
+        try {
+            System.out.println(Thread.currentThread().getContextClassLoader().getResource("org/xulinux/util").toURI());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
+
+    @org.junit.Test
+    public void testForSB() {
+        StringBuffer sb = new StringBuffer("com.mec.ff.bb");
+
+        sb.substring(sb.indexOf("."));
+
+        System.out.println(sb.delete(sb.lastIndexOf("."),sb.length()));
+        System.out.println(sb);
+    }
+
+    @org.junit.Test
+    public void testForPackageScanner() {
+        PackageScanner ps = new PackageScanner() {
+            @Override
+            void dealClass(Class<?> klass) {
+                System.out.println(klass.getName());
+            }
+        };
+        ps.scanPackage("org.xulinux");
+    }
+
+
 
 
 }
