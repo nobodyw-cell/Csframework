@@ -1,5 +1,7 @@
 package org.xulinux.core.server;
 
+import org.xulinux.action.DefaultActionDispatcher;
+import org.xulinux.action.IActionDispatcher;
 import org.xulinux.core.base.NetMessage;
 import org.xulinux.util.Listenner;
 import org.xulinux.util.PropertiesPaser;
@@ -23,11 +25,17 @@ public class Server implements Runnable, Speaker {
     private ServerSocket severSocket;
     private volatile boolean goon;
     private ClientPool clientPool;
+    private IActionDispatcher dispatcher;
     private List<Listenner> listenners;
 
     public Server() {
         this.clientPool = new ClientPool();
         this.listenners = new ArrayList<>();
+        this.dispatcher = new DefaultActionDispatcher();
+    }
+
+    public IActionDispatcher getDispatcher() {
+        return this.dispatcher;
     }
 
     public void offline(ServerConversation conversation) {

@@ -1,8 +1,13 @@
 package org.xulinux.core.client;
 
+import org.xulinux.action.ActionRequest;
+import org.xulinux.action.DefaultActionDispatcher;
+import org.xulinux.action.IActionDispatcher;
+import org.xulinux.action.annotation.ActionParameter;
 import org.xulinux.core.base.ENetCommand;
 import org.xulinux.core.base.NetMessage;
 import org.xulinux.util.PropertiesPaser;
+import org.xulinux.util.Util;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -18,9 +23,19 @@ public class Client {
     public String ip;
     private ClientConversation conversation;
     private IClientAction clientAction;
+    private IActionDispatcher dispatcher;
     private int id;
 
     public Client() {
+        this.dispatcher = new DefaultActionDispatcher();
+    }
+
+    public IActionDispatcher getDispatcher() {
+        return dispatcher;
+    }
+
+    public void setDispatcher(IActionDispatcher dispatcher) {
+        this.dispatcher = dispatcher;
     }
 
     public void setId(int id) {
@@ -86,6 +101,13 @@ public class Client {
                         .setSourth(this.id)
                         .setMessage(message)
         );
+    }
+
+    public void request(String action, ActionRequest actionRequest) {
+        this.conversation.send(new NetMessage()
+                .setCommand(ENetCommand.ACTION)
+                .setMessage(Util.gson.toJson(actionRequest))
+                .setAction(action));
     }
 
     public IClientAction getClientAction() {

@@ -1,7 +1,9 @@
 package org.xulinux.core.client;
 
+import org.xulinux.action.ActionRequest;
 import org.xulinux.core.base.Communication;
 import org.xulinux.core.base.NetMessage;
+import org.xulinux.util.Util;
 
 import java.net.Socket;
 
@@ -13,6 +15,7 @@ import java.net.Socket;
  */
 public class ClientConversation extends Communication {
     private Client client;
+    private NetMessage net;
 
     public ClientConversation(Socket socket,Client client) {
         super(socket);
@@ -45,8 +48,11 @@ public class ClientConversation extends Communication {
                 break;
             case TO_OTHER:
                 this.client.getClientAction()
-                        .dealSomePeopleMessage(netMessage.getMessage(),netMessage.getTarget(), netMessage.getSourth());
+                        .dealSomePeopleMessage(netMessage.getMessage(), netMessage.getTarget(), netMessage.getSourth());
                 break;
+            case ACTION:
+                this.client.getDispatcher().dispatch(Util.gson
+                        .fromJson(netMessage.getMessage(), ActionRequest.class), netMessage.getAction());
         }
     }
 

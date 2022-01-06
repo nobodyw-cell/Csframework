@@ -5,5 +5,6 @@ public enum ENetCommand {
     TO_OTHER,
     OVER_LOAD,
     ON_LINE,
-    OFFLINE
+    OFFLINE,
+    ACTION
 }

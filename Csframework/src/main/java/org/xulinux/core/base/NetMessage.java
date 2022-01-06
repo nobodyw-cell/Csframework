@@ -11,6 +11,7 @@ public class NetMessage {
     private int sourth;
     private String target;
     private String message;
+    private String action;
 
     public ENetCommand getCommand() {
         return command;
@@ -19,6 +20,15 @@ public class NetMessage {
     public NetMessage setCommand(ENetCommand command) {
         this.command = command;
         return this;
+    }
+
+    public NetMessage setAction(String action) {
+        this.action = action;
+        return this;
+    }
+
+    public String getAction() {
+        return action;
     }
 
     public int getSourth() {

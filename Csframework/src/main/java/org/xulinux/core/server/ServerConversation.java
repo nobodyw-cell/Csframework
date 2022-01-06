@@ -1,9 +1,14 @@
 package org.xulinux.core.server;
 
+import org.xulinux.action.ActionRequest;
+import org.xulinux.action.ActionResponse;
+import org.xulinux.action.DefaultActionDispatcher;
+import org.xulinux.action.IActionDispatcher;
 import org.xulinux.core.base.Communication;
 import org.xulinux.core.base.ENetCommand;
 import org.xulinux.core.base.NetMessage;
 import org.xulinux.core.server.Server;
+import org.xulinux.util.Util;
 
 import java.net.Socket;
 
@@ -18,6 +23,7 @@ public class ServerConversation extends Communication {
     private String ip;
     private Server server;
 
+
     public ServerConversation(Socket socket,Server server) {
         super(socket);
         this.ip = socket.getInetAddress().getHostAddress();
@@ -28,6 +34,8 @@ public class ServerConversation extends Communication {
     public String getIp() {
         return ip;
     }
+
+
 
     @Override
     public void dealAbnormalDrop() {
@@ -43,8 +51,18 @@ public class ServerConversation extends Communication {
                 break;
             case OFFLINE:
                 this.server.offline(this);
+                break;
             case TO_OTHER:
                 this.server.toOther(netMessage);
+                break;
+            case ACTION:
+                String action = netMessage.getAction();
+                ActionResponse ap = this.server.getDispatcher()
+                                .dispatch(Util.gson
+                                .fromJson(netMessage.getMessage(), ActionRequest.class),action);
+
+                this.response(action,ap);
+                break;
         }
     }
 
@@ -60,6 +78,12 @@ public class ServerConversation extends Communication {
                 .setCommand(ENetCommand.ON_LINE)
                 .setMessage(String.valueOf(this.id))
         );
+    }
+
+    public void response(String action,ActionResponse ap) {
+        send(new NetMessage().setAction(action)
+                .setMessage(Util.gson.toJson(ap))
+                .setCommand(ENetCommand.ACTION));
     }
 
     /**
