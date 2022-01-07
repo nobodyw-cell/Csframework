@@ -31,4 +31,5 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+    <packaging>jar</packaging>
 </project>

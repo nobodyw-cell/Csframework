@@ -87,6 +87,8 @@
       1. 首先他应该具有向一个客户端发送消息的能力 to_one(target,message)
       2. 向很多客户端发送消息的能力 toOther(targets,message)
       3. 请求资源的能力
-      4. 有很多东西我们在框架这一端是不能替用户做的我们把他抽象出来同意叫做IClientAction
+      4. 有很多东西我们在框架这一端是不能替用户做的我们把他抽象出来统一叫做IClientAction
 ## 2. 代码设计
-### 1. Communication
+
+### 2.1 我们首先设计Communication类
+通信是客户端服务器模型的基础,因此设计好这个类就显得十分重要.
